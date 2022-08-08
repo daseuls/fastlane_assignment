@@ -26,8 +26,6 @@ const IssueMain = () => {
               </IssueTitle>
             </IssueIconWrapper>
             <IssueLabel>issue: proposal</IssueLabel>
-            <IssueLabel>issue: proposal</IssueLabel>
-            <IssueLabel>issue: proposal</IssueLabel>
           </IssueTitleWrapper>
           <IssueCategoryWrapper>
             <CommentIcon width="1.2rem" fill="#57606A" />
@@ -44,17 +42,16 @@ export default IssueMain;
 const Wrapper = styled.main`
   margin: 2rem 0;
   width: 95%;
-  border: 1px solid #d0d7de;
-  /* border-bottom: 0px;  */
-  border-radius: 6px;
   max-width: 121rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
 `;
 
 const FilteringWrapper = styled.section`
   padding: 1rem 2rem;
-  background-color: #f6f8fa;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
+  background-color: #f6f8fa;
 `;
 
 const IsOpenFilterWrapper = styled.div`
@@ -74,23 +71,23 @@ const ClosedFilter = styled.div`
 
 const CountText = styled.p`
   margin-left: 0.5rem;
-  font-weight: 600;
   font-size: 1.2rem;
+  font-weight: 600;
 `;
 
 const IssueListWrapper = styled.ul``;
 
 const IssueWrapper = styled.li`
-  border-top: 1px solid #d0d7de;
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
+  padding: 1rem 2rem;
+  border-top: 1px solid #d0d7de;
 `;
 
 const IssueTitleWrapper = styled.div`
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
+  align-items: center;
   width: 80%;
 `;
 
@@ -100,8 +97,8 @@ const IssueIconWrapper = styled.div`
 `;
 
 const IssueTitle = styled.p`
-  font-size: 1.2rem;
   margin-left: 0.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
 `;
 
@@ -111,15 +108,15 @@ const IssueCategoryWrapper = styled.div`
 `;
 
 const IssueLabel = styled.div`
-  background-color: blue;
-  border-radius: 1rem;
-  color: white;
   padding: 0.3rem 0.7rem;
   margin-left: 0.5rem;
+  border-radius: 1rem;
+  color: white;
+  background-color: blue;
 `;
 
 const CommentCount = styled.p`
-  color: #57606a;
-  font-weight: 700;
   margin-left: 0.3rem;
+  font-weight: 700;
+  color: #57606a;
 `;
