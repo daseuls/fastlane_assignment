@@ -1,13 +1,12 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./layout";
-import Main from "./Main";
+import IssueMain from "./IssueMain";
 
 const App = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<Main />} />
+        <Route index element={<IssueMain />} />
       </Route>
     </Routes>
   );
