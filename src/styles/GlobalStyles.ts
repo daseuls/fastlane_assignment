@@ -13,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
 :root{
   display:flex;
   justify-content:center;
-  align-items:center;
   height:100vh;
   font-size: 10px;
   }
