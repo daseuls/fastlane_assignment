@@ -13,4 +13,10 @@ const Layout = () => {
 
 export default Layout;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

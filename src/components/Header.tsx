@@ -30,7 +30,7 @@ const Header = () => {
 export default Header;
 
 const Wrapper = styled.header`
-  width: 100vw;
+  width: 100%;
 `;
 
 const LogoWrapper = styled.section`
@@ -101,4 +101,5 @@ const CategorySubWrapper = styled.div`
 const Category = styled.p`
   margin-left: 0.6rem;
   font-size: 1.2rem;
+  font-weight: 700;
 `;
