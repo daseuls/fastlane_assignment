@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { getIssueList } from "../../api";
@@ -9,6 +9,11 @@ import IssueItem from "./_shared/IssueItem";
 
 const IssueMain = () => {
   const [issueList, setIssueList] = useRecoilState(issueListState);
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const [page, setPage] = useState(2);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const parentObservedTarget = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +22,39 @@ const IssueMain = () => {
     };
     fetchData();
   }, [setIssueList]);
+
+  const getMoreIssueList = useCallback(async () => {
+    setIsLoading(true);
+    const res = await getIssueList(page);
+    if (res.data) {
+      setIssueList([...issueList, ...res.data]);
+      setIsLoading(false);
+      setPage((prev) => prev + 1);
+    }
+  }, [issueList, page, setIssueList]);
+
+  const handleObserver: IntersectionObserverCallback = useCallback(
+    (entry) => {
+      if (entry[0].isIntersecting && !isLoading) {
+        setTimeout(() => {
+          getMoreIssueList();
+        }, 1000);
+      }
+    },
+    [getMoreIssueList, isLoading]
+  );
+
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    if (target) {
+      observer = new IntersectionObserver(handleObserver, {
+        root: parentObservedTarget.current,
+        threshold: 1,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  });
 
   return (
     <Wrapper>
@@ -32,10 +70,11 @@ const IssueMain = () => {
           </ClosedFilter>
         </IsOpenFilterWrapper>
       </FilteringWrapper>
-      <IssueListWrapper>
+      <IssueListWrapper ref={parentObservedTarget}>
         {issueList.map((item: IIssue) => (
           <IssueItem issue={item} key={item.id} />
         ))}
+        <Target ref={setTarget}>{!isLoading && <p>loading...</p>}</Target>
       </IssueListWrapper>
     </Wrapper>
   );
@@ -85,3 +124,5 @@ const CountText = styled.p`
 `;
 
 const IssueListWrapper = styled.ul``;
+
+const Target = styled.div``;
