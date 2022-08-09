@@ -49,6 +49,11 @@ const Wrapper = styled.main`
   max-width: 121rem;
   border: 1px solid #d0d7de;
   border-radius: 6px;
+  height: 80%;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const FilteringWrapper = styled.section`
