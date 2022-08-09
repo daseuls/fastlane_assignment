@@ -57,14 +57,10 @@ const IssueMain = () => {
     [getMoreIssueList, isLoading]
   );
 
-  const handleOpenState = async (state: string) => {
+  const handleOpenState = async (state: string, isOpen: boolean) => {
     const res = await getIssueList(1, state);
     setIssueList(res.data);
-    if (isOpenState) {
-      setIsOpenState(false);
-    } else {
-      setIsOpenState(true);
-    }
+    setIsOpenState(isOpen);
   };
 
   return (
@@ -73,13 +69,13 @@ const IssueMain = () => {
         <IsOpenFilterWrapper>
           <OpenedFilter>
             <CircleIcon width="1.2rem" fill={isOpenState ? "#24292f" : "#57606a"} />
-            <CountText isOpenState={isOpenState} onClick={() => handleOpenState("open")}>
+            <CountText isOpenState={isOpenState} onClick={() => handleOpenState("open", true)}>
               1,393 Open
             </CountText>
           </OpenedFilter>
           <ClosedFilter>
             <CheckIcon width="1.2rem" fill={!isOpenState ? "#24292f" : "#57606a"} />
-            <CountText isOpenState={!isOpenState} onClick={() => handleOpenState("closed")}>
+            <CountText isOpenState={!isOpenState} onClick={() => handleOpenState("closed", false)}>
               6,411 Closed
             </CountText>
           </ClosedFilter>

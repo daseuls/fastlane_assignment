@@ -13,12 +13,14 @@ const IssueItem = ({ issue, isOpenState }: IProps) => {
   return (
     <Wrapper>
       <TitleWrapper>
-        <IconWrapper>
-          {isOpenState ? <CircleIcon width="1.2rem" fill="#1C7E37" /> : <ClosedIcon width="1.2rem" fill="#8250df" />}
+        <TitleSubWrapper>
+          <IconWrapper>
+            {isOpenState ? <CircleIcon width="1.2rem" fill="#1C7E37" /> : <ClosedIcon width="1.2rem" fill="#8250df" />}
+          </IconWrapper>
 
           <Number>#{number}</Number>
           <Title>{title}</Title>
-        </IconWrapper>
+        </TitleSubWrapper>
         {labels.map((item) => (
           <Label color={item.color} key={item.id}>
             {item.name}
@@ -50,9 +52,13 @@ const TitleWrapper = styled.div`
   width: 80%;
 `;
 
-const IconWrapper = styled.div`
+const TitleSubWrapper = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const IconWrapper = styled.div`
+  width: 1.5rem;
 `;
 
 const Number = styled.p`
