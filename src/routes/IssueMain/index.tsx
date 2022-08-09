@@ -1,7 +1,23 @@
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { CheckIcon, CircleIcon, CommentIcon } from "../../assets";
+import { getIssueList } from "../../api";
+import { CheckIcon, CircleIcon } from "../../assets";
+import { issueListState } from "../../stores";
+import { IIssue } from "../../types";
+import IssueItem from "./_shared/IssueItem";
 
 const IssueMain = () => {
+  const [issueList, setIssueList] = useRecoilState(issueListState);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getIssueList();
+      setIssueList(res.data);
+    };
+    fetchData();
+  }, [setIssueList]);
+
   return (
     <Wrapper>
       <FilteringWrapper>
@@ -17,21 +33,9 @@ const IssueMain = () => {
         </IsOpenFilterWrapper>
       </FilteringWrapper>
       <IssueListWrapper>
-        <IssueWrapper>
-          <IssueTitleWrapper>
-            <IssueIconWrapper>
-              <CircleIcon width="1.2rem" fill="#1C7E37" />
-              <IssueTitle>
-                v5 used to include polyfills for node.js core modules by default issue: bug report
-              </IssueTitle>
-            </IssueIconWrapper>
-            <IssueLabel>issue: proposal</IssueLabel>
-          </IssueTitleWrapper>
-          <IssueCategoryWrapper>
-            <CommentIcon width="1.2rem" fill="#57606A" />
-            <CommentCount>10</CommentCount>
-          </IssueCategoryWrapper>
-        </IssueWrapper>
+        {issueList.map((item: IIssue) => (
+          <IssueItem issue={item} key={item.id} />
+        ))}
       </IssueListWrapper>
     </Wrapper>
   );
@@ -76,47 +80,3 @@ const CountText = styled.p`
 `;
 
 const IssueListWrapper = styled.ul``;
-
-const IssueWrapper = styled.li`
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  border-top: 1px solid #d0d7de;
-`;
-
-const IssueTitleWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  width: 80%;
-`;
-
-const IssueIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const IssueTitle = styled.p`
-  margin-left: 0.5rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-`;
-
-const IssueCategoryWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const IssueLabel = styled.div`
-  padding: 0.3rem 0.7rem;
-  margin-left: 0.5rem;
-  border-radius: 1rem;
-  color: white;
-  background-color: blue;
-`;
-
-const CommentCount = styled.p`
-  margin-left: 0.3rem;
-  font-weight: 700;
-  color: #57606a;
-`;
