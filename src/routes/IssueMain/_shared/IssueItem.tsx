@@ -17,7 +17,6 @@ const IssueItem = ({ issue, isOpenState }: IProps) => {
           <IconWrapper>
             {isOpenState ? <CircleIcon width="1.2rem" fill="#1C7E37" /> : <ClosedIcon width="1.2rem" fill="#8250df" />}
           </IconWrapper>
-
           <Number>#{number}</Number>
           <Title>{title}</Title>
         </TitleSubWrapper>
@@ -42,7 +41,11 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 1rem 2rem;
-  border-top: 1px solid #d0d7de;
+  border-bottom: 1px solid #d0d7de;
+  cursor: pointer;
+  &:hover {
+    background-color: #f6f8fa;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -70,6 +73,9 @@ const Number = styled.p`
 const Title = styled.p`
   font-size: 1.2rem;
   font-weight: 700;
+  &:hover {
+    color: #0969da;
+  }
 `;
 
 const CategoryWrapper = styled.div`

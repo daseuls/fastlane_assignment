@@ -4,3 +4,5 @@ export const getDateString = (data: string) => {
   dateArr.splice(19, 1);
   return dateArr.join("");
 };
+
+export const SORT_LIST = ["Most commented", "Newest", "Recently updated"];

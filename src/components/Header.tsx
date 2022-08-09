@@ -63,6 +63,7 @@ const User = styled.p`
   margin-left: 0.8rem;
   font-size: 1.6rem;
   color: #0969da;
+  cursor: pointer;
 `;
 
 const Repository = styled.p`
