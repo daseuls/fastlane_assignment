@@ -74,7 +74,7 @@ const IssueMain = () => {
         {issueList.map((item: IIssue) => (
           <IssueItem issue={item} key={item.id} />
         ))}
-        <Target ref={setTarget}>{!isLoading && <p>loading...</p>}</Target>
+        {/* <Target ref={setTarget}>{!isLoading && <p>loading...</p>}</Target> */}
       </IssueListWrapper>
     </Wrapper>
   );

@@ -8,7 +8,6 @@ interface IProps {
 }
 const IssueItem = ({ issue }: IProps) => {
   const { title, comments, labels, number } = issue;
-  console.log(labels);
   return (
     <Wrapper>
       <TitleWrapper>
@@ -23,7 +22,6 @@ const IssueItem = ({ issue }: IProps) => {
           </Label>
         ))}
       </TitleWrapper>
-
       <CategoryWrapper>
         <Date>{getDateString(issue.created_at)}</Date>
         <CommentIcon width="1.2rem" height="1.2rem" fill="#57606A" />
@@ -84,4 +82,6 @@ const CommentCount = styled.p`
   color: #57606a;
 `;
 
-const Date = styled.p``;
+const Date = styled.p`
+  margin-right: 1rem;
+`;
