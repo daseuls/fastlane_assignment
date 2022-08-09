@@ -12,6 +12,7 @@ const IssueMain = () => {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [page, setPage] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpenState, setIsOpenState] = useState(true);
 
   const parentObservedTarget = useRef<HTMLUListElement>(null);
 
@@ -22,6 +23,18 @@ const IssueMain = () => {
     };
     fetchData();
   }, [setIssueList]);
+
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    if (target) {
+      observer = new IntersectionObserver(handleObserver, {
+        root: parentObservedTarget.current,
+        threshold: 1,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  });
 
   const getMoreIssueList = useCallback(async () => {
     setIsLoading(true);
@@ -44,35 +57,37 @@ const IssueMain = () => {
     [getMoreIssueList, isLoading]
   );
 
-  useEffect(() => {
-    let observer: IntersectionObserver;
-    if (target) {
-      observer = new IntersectionObserver(handleObserver, {
-        root: parentObservedTarget.current,
-        threshold: 1,
-      });
-      observer.observe(target);
+  const handleOpenState = async (state: string) => {
+    const res = await getIssueList(1, state);
+    setIssueList(res.data);
+    if (isOpenState) {
+      setIsOpenState(false);
+    } else {
+      setIsOpenState(true);
     }
-    return () => observer && observer.disconnect();
-  });
+  };
 
   return (
     <Wrapper>
       <FilteringWrapper>
         <IsOpenFilterWrapper>
           <OpenedFilter>
-            <CircleIcon width="1.2rem" fill="#57606a" />
-            <CountText>1,393 Open</CountText>
+            <CircleIcon width="1.2rem" fill={isOpenState ? "#24292f" : "#57606a"} />
+            <CountText isOpenState={isOpenState} onClick={() => handleOpenState("open")}>
+              1,393 Open
+            </CountText>
           </OpenedFilter>
           <ClosedFilter>
-            <CheckIcon width="1.2rem" fill="#57606a" />
-            <CountText>6,411 Closed</CountText>
+            <CheckIcon width="1.2rem" fill={!isOpenState ? "#24292f" : "#57606a"} />
+            <CountText isOpenState={!isOpenState} onClick={() => handleOpenState("closed")}>
+              6,411 Closed
+            </CountText>
           </ClosedFilter>
         </IsOpenFilterWrapper>
       </FilteringWrapper>
       <IssueListWrapper ref={parentObservedTarget}>
         {issueList.map((item: IIssue) => (
-          <IssueItem issue={item} key={item.id} />
+          <IssueItem key={item.id} issue={item} isOpenState={isOpenState} />
         ))}
         {/* <Target ref={setTarget}>{!isLoading && <p>loading...</p>}</Target> */}
       </IssueListWrapper>
@@ -117,10 +132,12 @@ const ClosedFilter = styled.div`
   align-items: center;
 `;
 
-const CountText = styled.p`
+const CountText = styled.p<{ isOpenState: boolean }>`
   margin-left: 0.5rem;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: ${(props) => (props.isOpenState ? "700" : "500")};
+  color: ${(props) => (props.isOpenState ? "#24292f" : "#57606a")};
+  cursor: pointer;
 `;
 
 const IssueListWrapper = styled.ul``;
