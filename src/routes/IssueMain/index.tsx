@@ -38,7 +38,7 @@ const IssueMain = () => {
       if (entry[0].isIntersecting && !isLoading) {
         setTimeout(() => {
           getMoreIssueList();
-        }, 1000);
+        }, 3000);
       }
     },
     [getMoreIssueList, isLoading]

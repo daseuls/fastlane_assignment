@@ -49,11 +49,12 @@
     "no-param-reassign": ["error", { "props": false }],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
-
+    "camelcase": "off",
     "no-shadow": "off",
     "no-unused-expressions": ["warn"],
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",

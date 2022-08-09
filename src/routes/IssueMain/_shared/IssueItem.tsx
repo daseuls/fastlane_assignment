@@ -1,18 +1,20 @@
 import styled from "styled-components";
 import { CircleIcon, CommentIcon } from "../../../assets";
 import { IIssue } from "../../../types";
+import { getDateString } from "../../../utils";
 
 interface IProps {
   issue: IIssue;
 }
 const IssueItem = ({ issue }: IProps) => {
-  const { title, comments, labels } = issue;
+  const { title, comments, labels, number } = issue;
   console.log(labels);
   return (
     <Wrapper>
       <TitleWrapper>
         <IconWrapper>
           <CircleIcon width="1.2rem" fill="#1C7E37" />
+          <Number>#{number}</Number>
           <Title>{title}</Title>
         </IconWrapper>
         {labels.map((item) => (
@@ -21,8 +23,10 @@ const IssueItem = ({ issue }: IProps) => {
           </Label>
         ))}
       </TitleWrapper>
+
       <CategoryWrapper>
-        <CommentIcon width="1.2rem" fill="#57606A" />
+        <Date>{getDateString(issue.created_at)}</Date>
+        <CommentIcon width="1.2rem" height="1.2rem" fill="#57606A" />
         <CommentCount>{comments}</CommentCount>
       </CategoryWrapper>
     </Wrapper>
@@ -50,8 +54,13 @@ const IconWrapper = styled.div`
   align-items: center;
 `;
 
+const Number = styled.p`
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  color: #57606a;
+`;
+
 const Title = styled.p`
-  margin-left: 0.5rem;
   font-size: 1.2rem;
   font-weight: 700;
 `;
@@ -74,3 +83,5 @@ const CommentCount = styled.p`
   font-weight: 700;
   color: #57606a;
 `;
+
+const Date = styled.p``;
