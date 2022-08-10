@@ -28,6 +28,7 @@ const IssueMain = () => {
       setIssueList(res.data);
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -114,7 +115,7 @@ const IssueMain = () => {
         {issueList.map((item: IIssue) => (
           <IssueItem key={item.id} issue={item} isOpenState={isOpenState} />
         ))}
-        <Target ref={setTarget}>{!isLoading && <Loading />}</Target>
+        {issueList.length !== 0 && <Target ref={setTarget}>{!isLoading && <Loading />}</Target>}
       </IssueListWrapper>
     </Wrapper>
   );
