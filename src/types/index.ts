@@ -6,6 +6,7 @@ export interface IIssue {
   title: string;
   labels: IIssueLabel[];
   user: IUser;
+  state: string;
 }
 
 export interface IIssueLabel {
@@ -16,4 +17,5 @@ export interface IIssueLabel {
 
 export interface IUser {
   login: string;
+  avatar_url: string;
 }

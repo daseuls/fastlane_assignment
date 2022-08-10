@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { CircleIcon } from "../../assets";
+import { CircleIcon, ClosedIcon } from "../../assets";
 import { IIssue, IIssueLabel } from "../../types";
 
 interface LocationState {
@@ -19,9 +19,13 @@ const IssueDetail = () => {
           <Number>#{number}</Number>
         </TitleSubWrapper>
         <TitleSubWrapper>
-          <LabelWrapper>
-            <CircleIcon width="1rem" fill="white" />
-            <Label>Open</Label>
+          <LabelWrapper state={state.state === "open"}>
+            {state.state === "open" ? (
+              <CircleIcon width="1rem" fill="white" />
+            ) : (
+              <ClosedIcon width="1rem" fill="white" />
+            )}
+            <Label>{state.state === "open" ? "Open" : "Closed"}</Label>
           </LabelWrapper>
           <UserWrapper>
             <User>{user.login}&nbsp;</User>
@@ -31,6 +35,14 @@ const IssueDetail = () => {
           </UserWrapper>
         </TitleSubWrapper>
       </TitleWrapper>
+      <ContentsWrapper>
+        <ProfileImg src={user.avatar_url} />
+        <ContentsSubWrapper>
+          <ContentsHeader>
+            {user.login} commented on {new Date(created_at).toDateString()}
+          </ContentsHeader>
+        </ContentsSubWrapper>
+      </ContentsWrapper>
     </Wrapper>
   );
 };
@@ -44,7 +56,8 @@ const Wrapper = styled.main`
 `;
 
 const TitleWrapper = styled.div`
-  margin-top: 2.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 0.5px solid #d0d7de;
 `;
 
 const TitleSubWrapper = styled.div`
@@ -53,10 +66,10 @@ const TitleSubWrapper = styled.div`
   margin-top: 0.5rem;
 `;
 
-const LabelWrapper = styled.div`
+const LabelWrapper = styled.div<{ state: boolean }>`
   display: flex;
   align-items: center;
-  background-color: #2da44e;
+  background-color: ${(props) => (props.state ? "#2da44e" : "#8250df")};
   padding: 0.5rem 1rem;
   border-radius: 2rem;
 `;
@@ -93,3 +106,33 @@ const User = styled.p`
 `;
 
 const Text = styled.p``;
+
+const ContentsWrapper = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  width: 100%;
+  /* background-color: yellow; */
+`;
+
+const ProfileImg = styled.img`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 0.5px solid #d0d7de;
+  margin-right: 1rem;
+`;
+
+const ContentsSubWrapper = styled.div`
+  border: 1px solid #d0d7de;
+  width: 100%;
+  border-radius: 0.6rem;
+`;
+
+const ContentsHeader = styled.div`
+  padding: 1rem 1.5rem;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: 1px solid #d0d7de;
+  font-size: 1.2rem;
+  background-color: #f6f8fa;
+`;
