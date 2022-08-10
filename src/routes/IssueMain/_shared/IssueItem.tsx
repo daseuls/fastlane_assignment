@@ -2,17 +2,24 @@ import styled from "styled-components";
 import { IIssue } from "../../../types";
 import { getDateString } from "../../../utils";
 import { CircleIcon, ClosedIcon, CommentIcon } from "../../../assets";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   issue: IIssue;
   isOpenState: boolean;
 }
 const IssueItem = ({ issue, isOpenState }: IProps) => {
-  const { title, comments, labels, number } = issue;
+  const { id, title, comments, labels, number } = issue;
+
+  const navigate = useNavigate();
+
+  const goToDetailPage = () => {
+    navigate(`issue/${id}`, { state: issue });
+  };
 
   return (
     <Wrapper>
-      <TitleWrapper>
+      <TitleWrapper onClick={goToDetailPage}>
         <TitleSubWrapper>
           <IconWrapper>
             {isOpenState ? <CircleIcon width="1.2rem" fill="#1C7E37" /> : <ClosedIcon width="1.2rem" fill="#8250df" />}

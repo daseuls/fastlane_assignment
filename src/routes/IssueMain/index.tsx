@@ -173,7 +173,7 @@ const IssueListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80vh;
+  height: 78vh;
   margin-top: 3.6rem;
   overflow: auto;
   &::-webkit-scrollbar {
