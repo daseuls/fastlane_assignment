@@ -1,7 +1,7 @@
 import React, { Dispatch, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { CheckIcon, CloseIcon } from "../../../assets";
 import { SORT_LIST } from "../../../utils";
+import { CheckIcon, CloseIcon } from "../../../assets";
 
 interface IProps {
   isOpenModal: boolean;
@@ -59,23 +59,23 @@ const SortIconWrapper = styled.div`
 `;
 
 const SortModalWrapper = styled.div`
-  width: 17rem;
-  background-color: white;
   position: absolute;
   top: 3rem;
   right: 1rem;
+  width: 17rem;
   border: 0.5px solid #d0d7de;
   border-radius: 0.6rem;
   box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+  background-color: white;
 `;
 
 const SortListWrapper = styled.div`
   display: flex;
+  align-items: center;
+  height: 2.5rem;
   padding: 0.5rem 1.6rem;
   border-top: 0.5px solid #d0d7de;
-  align-items: center;
   cursor: pointer;
-  height: 2.5rem;
   &:hover {
     background-color: #f6f8fa;
   }

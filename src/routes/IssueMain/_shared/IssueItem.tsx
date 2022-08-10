@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { CircleIcon, ClosedIcon, CommentIcon } from "../../../assets";
 import { IIssue } from "../../../types";
 import { getDateString } from "../../../utils";
+import { CircleIcon, ClosedIcon, CommentIcon } from "../../../assets";
 
 interface IProps {
   issue: IIssue;

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
 import { getIssueList } from "../../api";
-import { CheckIcon, CircleIcon, DownIcon } from "../../assets";
-import Loading from "../../components/Loading";
+import { getSortKeyword } from "../../utils";
 import { issueListState } from "../../stores";
 import { IIssue } from "../../types";
-import { getSortKeyword } from "../../utils";
+import { CheckIcon, CircleIcon, DownIcon } from "../../assets";
+import Loading from "../../components/Loading";
 import IssueItem from "./_shared/IssueItem";
 import SortModal from "./_shared/SortModal";
 
@@ -45,9 +45,7 @@ const IssueMain = () => {
   const getMoreIssueList = useCallback(async () => {
     const isOpen = isOpenState ? "open" : "closed";
     setIsLoading(true);
-    console.log("실행");
     const res = await getIssueList(page, isOpen, getSortKeyword(sortState));
-    console.log(res);
     if (res.data) {
       setIssueList([...issueList, ...res.data]);
       setIsLoading(false);
@@ -135,17 +133,17 @@ const Wrapper = styled.main`
 
 const FilteringWrapper = styled.section`
   position: absolute;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  top: 0;
+  height: 3.6rem;
   padding: 1rem 2rem;
+  border-bottom: 1px solid #d0d7de;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   background-color: #f6f8fa;
-  height: 3.6rem;
-  border-bottom: 1px solid #d0d7de;
 `;
 
 const IsOpenFilterWrapper = styled.div`
@@ -174,10 +172,9 @@ const CountText = styled.p<{ isOpenState: boolean }>`
 const IssueListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
-  margin-top: 3.6rem;
   height: 80vh;
+  margin-top: 3.6rem;
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -191,8 +188,8 @@ const SortWrapper = styled.div`
 `;
 
 const SortFilter = styled.p`
-  font-weight: 700;
   margin-right: 0.5rem;
+  font-weight: 700;
 `;
 
 const Target = styled.div``;
