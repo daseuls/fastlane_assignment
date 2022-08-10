@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { LogoIcon, BookmarkIcon, CircleIcon } from "../assets";
+import { URLS } from "../constants";
 
 const Header = () => {
   return (
@@ -11,9 +12,13 @@ const Header = () => {
       <IssueWrapper>
         <RepositoryWrapper>
           <BookmarkIcon width="1rem" fill="#57606A" />
-          <User>facebook</User>
+          <User href={URLS.facebook} target="_blank">
+            facebook
+          </User>
           <Slash>/</Slash>
-          <Repository>create-react-app</Repository>
+          <Repository href={URLS.cra} target="_blank">
+            create-react-app
+          </Repository>
           <Label>Public</Label>
         </RepositoryWrapper>
         <CategoryWrapper>
@@ -59,14 +64,14 @@ const RepositoryWrapper = styled.div`
   padding: 1.6rem 2.8rem;
 `;
 
-const User = styled.p`
+const User = styled.a`
   margin-left: 0.8rem;
   font-size: 1.6rem;
   color: #0969da;
   cursor: pointer;
 `;
 
-const Repository = styled.p`
+const Repository = styled.a`
   font-size: 1.6rem;
   font-weight: 700;
   color: #0969da;

@@ -1,7 +1,8 @@
 import React, { Dispatch, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { SORT_LIST } from "../../../utils";
+import {} from "../../../utils";
 import { CheckIcon, CloseIcon } from "../../../assets";
+import { SORT_LIST } from "../../../constants";
 
 interface IProps {
   isOpenModal: boolean;

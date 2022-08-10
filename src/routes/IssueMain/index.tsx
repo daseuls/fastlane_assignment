@@ -28,6 +28,7 @@ const IssueMain = () => {
       setIssueList(res.data);
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -114,7 +115,7 @@ const IssueMain = () => {
         {issueList.map((item: IIssue) => (
           <IssueItem key={item.id} issue={item} isOpenState={isOpenState} />
         ))}
-        <Target ref={setTarget}>{!isLoading && <Loading />}</Target>
+        {issueList.length !== 0 && <Target ref={setTarget}>{!isLoading && <Loading />}</Target>}
       </IssueListWrapper>
     </Wrapper>
   );
@@ -173,7 +174,7 @@ const IssueListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80vh;
+  height: 78vh;
   margin-top: 3.6rem;
   overflow: auto;
   &::-webkit-scrollbar {

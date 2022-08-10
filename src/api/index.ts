@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = " https://api.github.com/repos/facebook/create-react-app/issues";
+const BASE_URL = "https://api.github.com/repos/facebook/create-react-app/issues";
 
 export const getIssueList = async (page: number = 1, state: string = "open", sort: string = "comments") => {
   try {
@@ -14,6 +14,7 @@ export const getIssueList = async (page: number = 1, state: string = "open", sor
     });
     return response;
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err);
     return {
       data: [],
