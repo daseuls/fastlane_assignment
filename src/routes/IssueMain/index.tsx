@@ -2,20 +2,23 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { getIssueList } from "../../api";
-import { CheckIcon, CircleIcon, CloseIcon, DownIcon } from "../../assets";
+import { CheckIcon, CircleIcon, DownIcon } from "../../assets";
+import Loading from "../../components/Loading";
 import { issueListState } from "../../stores";
 import { IIssue } from "../../types";
-import { getSortKeyword, SORT_LIST } from "../../utils";
+import { getSortKeyword } from "../../utils";
 import IssueItem from "./_shared/IssueItem";
+import SortModal from "./_shared/SortModal";
 
 const IssueMain = () => {
   const [issueList, setIssueList] = useRecoilState(issueListState);
-  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+
   const [page, setPage] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpenState, setIsOpenState] = useState(true);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [sortState, setSortState] = useState("Most commented");
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
 
   const parentObservedTarget = useRef<HTMLUListElement>(null);
 
@@ -41,7 +44,6 @@ const IssueMain = () => {
 
   const getMoreIssueList = useCallback(async () => {
     const isOpen = isOpenState ? "open" : "closed";
-
     setIsLoading(true);
     const res = await getIssueList(page, isOpen, getSortKeyword(sortState));
     if (res.data) {
@@ -56,14 +58,14 @@ const IssueMain = () => {
       if (entry[0].isIntersecting && !isLoading) {
         setTimeout(() => {
           getMoreIssueList();
-        }, 3000);
+        }, 1000);
       }
     },
     [getMoreIssueList, isLoading]
   );
 
   const handleOpenState = async (state: string, isOpen: boolean) => {
-    const res = await getIssueList(1, state);
+    const res = await getIssueList(1, state, getSortKeyword(sortState));
     setIssueList(res.data);
     setIsOpenState(isOpen);
   };
@@ -73,6 +75,7 @@ const IssueMain = () => {
     const res = await getIssueList(1, isOpen, getSortKeyword(sort));
     setIssueList(res.data);
     setSortState(sort);
+    setIsOpenModal(false);
   };
 
   return (
@@ -92,30 +95,24 @@ const IssueMain = () => {
             </CountText>
           </ClosedFilter>
         </IsOpenFilterWrapper>
-        <SortWrapper onClick={() => setIsOpenModal(true)}>
+        <SortWrapper onClick={() => setIsOpenModal((prev) => !prev)}>
           <SortFilter>Sort</SortFilter>
           <DownIcon width="0.7rem" />
         </SortWrapper>
         {isOpenModal && (
-          <SortModalWrapper>
-            <SortHeaderWrapper>
-              <SortHeaderText>Sort by</SortHeaderText>
-              <CloseIcon width="0.6rem" fill="#57606a" onClick={() => setIsOpenModal(false)} />
-            </SortHeaderWrapper>
-            {SORT_LIST.map((item) => (
-              <SortListWrapper key={item} onClick={() => handleSortList(item)}>
-                <SortIconWrapper>{sortState === item && <CheckIcon width="1rem" />}</SortIconWrapper>
-                <SortText>{item}</SortText>
-              </SortListWrapper>
-            ))}
-          </SortModalWrapper>
+          <SortModal
+            isOpenModal={isOpenModal}
+            setIsOpenModal={setIsOpenModal}
+            handleSortList={handleSortList}
+            sortState={sortState}
+          />
         )}
       </FilteringWrapper>
       <IssueListWrapper ref={parentObservedTarget}>
         {issueList.map((item: IIssue) => (
           <IssueItem key={item.id} issue={item} isOpenState={isOpenState} />
         ))}
-        <Target ref={setTarget}>{!isLoading && <p>loading...</p>}</Target>
+        <Target ref={setTarget}>{!isLoading && <Loading />}</Target>
       </IssueListWrapper>
     </Wrapper>
   );
@@ -171,6 +168,10 @@ const CountText = styled.p<{ isOpenState: boolean }>`
 `;
 
 const IssueListWrapper = styled.ul`
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
   margin-top: 3.6rem;
   height: 80vh;
   overflow: auto;
@@ -185,50 +186,9 @@ const SortWrapper = styled.div`
   cursor: pointer;
 `;
 
-const SortHeaderWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.7rem 1.6rem;
-  font-weight: 700;
-`;
-
-const SortHeaderText = styled.p``;
-
-const SortIconWrapper = styled.div`
-  width: 1.5rem;
-`;
-
 const SortFilter = styled.p`
   font-weight: 700;
   margin-right: 0.5rem;
-`;
-
-const SortModalWrapper = styled.div`
-  width: 17rem;
-  background-color: white;
-  position: absolute;
-  top: 3rem;
-  right: 1rem;
-  border: 0.5px solid #d0d7de;
-  border-radius: 0.6rem;
-  box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
-`;
-
-const SortListWrapper = styled.div`
-  display: flex;
-  padding: 0.5rem 1.6rem;
-  border-top: 0.5px solid #d0d7de;
-  align-items: center;
-  cursor: pointer;
-  height: 2.5rem;
-  &:hover {
-    background-color: #f6f8fa;
-  }
-`;
-
-const SortText = styled.p`
-  font-weight: 600;
 `;
 
 const Target = styled.div``;
