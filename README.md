@@ -1,46 +1,57 @@
-# Getting Started with Create React App
+# FastLane Assignment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+패스트레인 프론트엔드 과제입니다.
 
-## Available Scripts
+> 개발자 : 이다슬 <br>
+> 개발 기간 : 8/8 - 8/11 <br>
+> 배포 링크 : https://fastlane-assignment.netlify.app/
 
-In the project directory, you can run:
+# 사용 기술스택 / 라이브러리
 
-### `npm start`
+- TypeScript, React(CRA)
+- Styled Component
+- React-router v6 (페이지 전환)
+- Recoil (전역 상태 관리)
+- Eslint + Prettier
+- React-markdown (디테일 페이지 내용 마크다운 처리)
+- React-loading (loading spinner)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# 실행 방법
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. Repository clone
 
-### `npm test`
+```
+git clone https://github.com/daseuls/fastlane_assignment.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. 해당 프로젝트 폴더 이동
 
-### `npm run build`
+```
+cd fastlane-assignment
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. 필요 package 설치
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. 프로젝트 실행
 
-### `npm run eject`
+```
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# 구현 사항
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 이슈 메인 페이지
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- 댓글 많은 순으로 정렬
+- sort 모달에서 최신순, 업데이트 순, 댓글 순으로 정렬 가능
+- Intersection Observer를 통한 무한 스크롤
+- Open된 이슈와 Closed된 이슈를 나눠 렌더링
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 이슈 디테일 페이지
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 해당 이슈 내용 markdown 형식으로 변환해 렌더링
+- 해당 이슈 reaction label 데이터 변환해 렌더링
