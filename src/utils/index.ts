@@ -5,4 +5,14 @@ export const getDateString = (data: string) => {
   return dateArr.join("");
 };
 
+export const getSortKeyword = (sort: string) => {
+  if (sort === "Most commented") {
+    return "comments";
+  }
+  if (sort === "Newest") {
+    return "created";
+  }
+  return "updated";
+};
+
 export const SORT_LIST = ["Most commented", "Newest", "Recently updated"];

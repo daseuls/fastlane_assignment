@@ -5,3 +5,4 @@ export { ReactComponent as CheckIcon } from "./check.svg";
 export { ReactComponent as CommentIcon } from "./comment.svg";
 export { ReactComponent as ClosedIcon } from "./closed.svg";
 export { ReactComponent as DownIcon } from "./down.svg";
+export { ReactComponent as CloseIcon } from "./close.svg";

@@ -2,10 +2,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { getIssueList } from "../../api";
-import { CheckIcon, CircleIcon, DownIcon } from "../../assets";
+import { CheckIcon, CircleIcon, CloseIcon, DownIcon } from "../../assets";
 import { issueListState } from "../../stores";
 import { IIssue } from "../../types";
-import { SORT_LIST } from "../../utils";
+import { getSortKeyword, SORT_LIST } from "../../utils";
 import IssueItem from "./_shared/IssueItem";
 
 const IssueMain = () => {
@@ -40,14 +40,16 @@ const IssueMain = () => {
   });
 
   const getMoreIssueList = useCallback(async () => {
+    const isOpen = isOpenState ? "open" : "closed";
+
     setIsLoading(true);
-    const res = await getIssueList(page);
+    const res = await getIssueList(page, isOpen, getSortKeyword(sortState));
     if (res.data) {
       setIssueList([...issueList, ...res.data]);
       setIsLoading(false);
       setPage((prev) => prev + 1);
     }
-  }, [issueList, page, setIssueList]);
+  }, [isOpenState, issueList, page, setIssueList, sortState]);
 
   const handleObserver: IntersectionObserverCallback = useCallback(
     (entry) => {
@@ -68,17 +70,7 @@ const IssueMain = () => {
 
   const handleSortList = async (sort: string) => {
     const isOpen = isOpenState ? "open" : "closed";
-    const getsortKeyword = (sortText: string) => {
-      if (sortText === "Most commented") {
-        return "comments";
-      }
-      if (sortText === "Newest") {
-        return "created";
-      }
-      return "updated";
-    };
-
-    const res = await getIssueList(1, isOpen, getsortKeyword(sort));
+    const res = await getIssueList(1, isOpen, getSortKeyword(sort));
     setIssueList(res.data);
     setSortState(sort);
   };
@@ -100,19 +92,24 @@ const IssueMain = () => {
             </CountText>
           </ClosedFilter>
         </IsOpenFilterWrapper>
-        <SortWrapper>
+        <SortWrapper onClick={() => setIsOpenModal(true)}>
           <SortFilter>Sort</SortFilter>
           <DownIcon width="0.7rem" />
         </SortWrapper>
-        <SortModalWrapper>
-          <SortHeaderWrapper>Sort by</SortHeaderWrapper>
-          {SORT_LIST.map((item) => (
-            <SortListWrapper key={item} onClick={() => handleSortList(item)}>
-              <SortIconWrapper>{sortState === item && <CheckIcon width="1rem" />}</SortIconWrapper>
-              <SortText>{item}</SortText>
-            </SortListWrapper>
-          ))}
-        </SortModalWrapper>
+        {isOpenModal && (
+          <SortModalWrapper>
+            <SortHeaderWrapper>
+              <SortHeaderText>Sort by</SortHeaderText>
+              <CloseIcon width="0.6rem" fill="#57606a" onClick={() => setIsOpenModal(false)} />
+            </SortHeaderWrapper>
+            {SORT_LIST.map((item) => (
+              <SortListWrapper key={item} onClick={() => handleSortList(item)}>
+                <SortIconWrapper>{sortState === item && <CheckIcon width="1rem" />}</SortIconWrapper>
+                <SortText>{item}</SortText>
+              </SortListWrapper>
+            ))}
+          </SortModalWrapper>
+        )}
       </FilteringWrapper>
       <IssueListWrapper ref={parentObservedTarget}>
         {issueList.map((item: IIssue) => (
@@ -189,9 +186,14 @@ const SortWrapper = styled.div`
 `;
 
 const SortHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0.7rem 1.6rem;
   font-weight: 700;
 `;
+
+const SortHeaderText = styled.p``;
 
 const SortIconWrapper = styled.div`
   width: 1.5rem;
