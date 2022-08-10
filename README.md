@@ -46,16 +46,17 @@ npm start
 
 ## 이슈 메인 페이지
 
-<img width="1000" alt="스크린샷 2022-08-11 오전 8 29 48" src="https://user-images.githubusercontent.com/71131248/184040403-91fb40e5-239a-450b-8222-2bd0cb2b7475.png">
+<img width="1000" alt="스크린샷 2022-08-11 오전 8 28 53" src="https://user-images.githubusercontent.com/71131248/184040411-cfb4ad9a-30fd-4482-92f8-d65964ca3b49.png">
 
 - 댓글 많은 순으로 정렬
 - sort 모달에서 최신순, 업데이트 순, 댓글 순으로 정렬 가능
 - Intersection Observer를 통한 무한 스크롤
 - Open된 이슈와 Closed된 이슈를 나눠 렌더링
 
-<img width="1000" alt="스크린샷 2022-08-11 오전 8 28 53" src="https://user-images.githubusercontent.com/71131248/184040411-cfb4ad9a-30fd-4482-92f8-d65964ca3b49.png">
-
 ## 이슈 디테일 페이지
+
+<img width="1000" alt="스크린샷 2022-08-11 오전 8 34 59" src="https://user-images.githubusercontent.com/71131248/184040830-8858b3d7-2bad-4abc-918e-a745f8044a9e.png">
+.png">
 
 - 해당 이슈 내용 markdown 형식으로 변환해 렌더링
 - 해당 이슈 reaction label 데이터 변환해 렌더링
