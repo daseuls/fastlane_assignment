@@ -28,14 +28,14 @@ const IssueMain = () => {
       setIssueList(res.data);
     };
     fetchData();
-  }, [setIssueList]);
+  }, []);
 
   useEffect(() => {
     let observer: IntersectionObserver;
     if (target) {
       observer = new IntersectionObserver(handleObserver, {
         root: parentObservedTarget.current,
-        threshold: 1,
+        threshold: 0.8,
       });
       observer.observe(target);
     }
@@ -45,7 +45,9 @@ const IssueMain = () => {
   const getMoreIssueList = useCallback(async () => {
     const isOpen = isOpenState ? "open" : "closed";
     setIsLoading(true);
+    console.log("실행");
     const res = await getIssueList(page, isOpen, getSortKeyword(sortState));
+    console.log(res);
     if (res.data) {
       setIssueList([...issueList, ...res.data]);
       setIsLoading(false);
@@ -66,6 +68,7 @@ const IssueMain = () => {
 
   const handleOpenState = async (state: string, isOpen: boolean) => {
     const res = await getIssueList(1, state, getSortKeyword(sortState));
+    setPage(2);
     setIssueList(res.data);
     setIsOpenState(isOpen);
   };
@@ -75,6 +78,7 @@ const IssueMain = () => {
     const res = await getIssueList(1, isOpen, getSortKeyword(sort));
     setIssueList(res.data);
     setSortState(sort);
+    setPage(2);
     setIsOpenModal(false);
   };
 
