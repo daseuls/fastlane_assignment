@@ -44,7 +44,7 @@ npm install
 REACT_APP_BASE_URL=https://api.github.com/repos/facebook/create-react-app/issues
 ```
 
-4. 프로젝트 실행
+5. 프로젝트 실행
 
 ```
 npm start
