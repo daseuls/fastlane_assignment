@@ -4,7 +4,7 @@ import ReactLoading from "react-loading";
 const Loading = () => {
   return (
     <LoadingWrapper>
-      <ReactLoading type="spin" color="#57606a" height={20} width={20} />;
+      <ReactLoading type="spin" color="#57606a" height={20} width={20} />
     </LoadingWrapper>
   );
 };
