@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.github.com/repos/facebook/create-react-app/issues";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const getIssueList = async (page: number = 1, state: string = "open", sort: string = "comments") => {
   try {

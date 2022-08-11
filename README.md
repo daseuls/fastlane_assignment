@@ -13,8 +13,8 @@
 - React-router v6 (페이지 전환)
 - Recoil (전역 상태 관리)
 - Eslint + Prettier
-- React-markdown (디테일 페이지 내용 마크다운 처리)
-- React-loading (loading spinner)
+- [React-markdown](https://github.com/remarkjs/react-markdown) (디테일 페이지 내용 마크다운 처리)
+- [React-loading](https://github.com/fakiolinho/react-loading) (loading spinner)
 
 # 실행 방법
 
@@ -34,6 +34,14 @@ cd fastlane-assignment
 
 ```
 npm install
+```
+
+4. root 하단에 .env 파일 생성 후 환경 변수 등록
+
+```
+// .env
+
+REACT_APP_BASE_URL=https://api.github.com/repos/facebook/create-react-app/issues
 ```
 
 4. 프로젝트 실행
@@ -56,7 +64,6 @@ npm start
 ## 이슈 디테일 페이지
 
 <img width="1000" alt="스크린샷 2022-08-11 오전 8 34 59" src="https://user-images.githubusercontent.com/71131248/184040830-8858b3d7-2bad-4abc-918e-a745f8044a9e.png">
-.png">
 
 - 해당 이슈 내용 markdown 형식으로 변환해 렌더링
 - 해당 이슈 reaction label 데이터 변환해 렌더링
